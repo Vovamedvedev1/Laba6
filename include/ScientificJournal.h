@@ -14,14 +14,18 @@ private:
     void validatorParagraphs(int, const std::string*) const;
     void validatorCountArticles(int) const;
     void validatorArticle(Article**, const Article&, int) const;
-    friend class Item;
+    Article** getArticles();
+    void setParagraphs(const std::string*, int);
+    //ѕереопредел€емые дочерние методы других классов
+    virtual void setNewscolumn(const std::string*, int) override { throw Exception("Error Interface"); };
+    virtual void appendNews(const std::string) override { throw Exception("Error Interface"); };
+    virtual void setPredictMassive(Prediction**) override { throw Exception("Error Interface"); };
+    virtual void getPredict(std::string) const override { throw Exception("Error Interface"); };
 public:
     ScientificJournal();
     ScientificJournal(const char*, int, std::string*, int, double, int, Article**);
-    void setParagraphs(const std::string*, int);
     virtual void setArticles(Article**, int) override;
     virtual int getcountArticles() const override;
-    Article** getArticles();
     virtual void sort(parametrSort) override;
     virtual void pop(std::string&&) override;
     virtual void append(const Article&) override;

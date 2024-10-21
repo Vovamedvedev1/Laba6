@@ -92,11 +92,6 @@ double PrintedEdition::getPrice() const
     return *this->price;
 }
 
-void PrintedEdition::func()
-{
-    cout << "!!!!!!!!!!!!!!!!!!!!!!!!!1Func from PrintedEdition!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-}
-
 void PrintedEdition::show() const
 {
     cout << "Название:  " << this->getName() << endl;

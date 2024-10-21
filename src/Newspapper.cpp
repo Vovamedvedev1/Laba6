@@ -27,10 +27,7 @@ Newspapper::Newspapper(const char* name, int countPages, double price, const std
 {
     this->setNewscolumn(massive, counternews);
 }
-void Newspapper::func()
-{
-    cout << "!!!!!!!!!!!!!!!Func from Newspapper!!!!!!!!!!!!!!!!!!!!!" << endl;
-}
+
 void Newspapper::setNewscolumn(const string* newscolumn, int counternews)
 {
     validatorNewscolumn(counternews, newscolumn);
@@ -60,6 +57,28 @@ void Newspapper::appendNews(const string news)
     delete[]this->newscolumn;
     this->newscolumn = temp;
     temp = nullptr;
+}
+
+void Newspapper::pop(string&& news)
+{
+    int index = -1;
+    for (int i = 0; i < this->counternews; i++)
+    {
+        if (this->newscolumn[i] == news)
+        {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1)
+        return;
+    string* Mnews = new string[this->counternews - 1];
+    for (int i = 0; i < index; i++)
+        Mnews[i] = this->newscolumn[i];
+    for (int i = index + 1; i < this->counternews; i++)
+        Mnews[i - 1] = this->newscolumn[i];
+    this->setNewscolumn(Mnews, this->counternews - 1);
+    delete[]Mnews;
 }
 
 void Newspapper::show() const

@@ -25,6 +25,7 @@ int main()
         ourprintedEdition->appendNews("Скандал Филиппа Киркорова и Николая Баскова");
         ourprintedEdition->appendNews("Рост цен на продукты питания");
         ourprintedEdition->appendNews("Израильско-палестинский конфликт");
+        ourprintedEdition->pop("Рост цен на продукты питания");
         break;
     case 2:
         funcScientificJournal(ourprintedEdition);
@@ -47,21 +48,5 @@ int main()
 
         delete ourprintedEdition;
     }
-    //Пример раннего связывания
-    cout << endl;
-    cout << "Пример раннего связывания" << endl;
-    string* strnews = new string[3];
-    strnews[0] = "Новость1";
-    strnews[1] = "Новость2";
-    strnews[2] = "Новость3";
-    PrintedEdition* pr1 = new PrintedEdition("Журнал 1", 245, 135.7);
-    PrintedEdition* pr2 = new Newspapper("Газета 1", 214, 135.8, strnews, 3);
-    pr1->show();
-    pr1->func();
-    pr2->show();
-    pr1->func();
-    delete[]strnews;
-    delete pr1;
-    delete pr2;
     return 0;
 }
