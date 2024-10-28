@@ -25,6 +25,7 @@ public:
     double getPrice() const;
     //Виртуальные методы для ScientificJournal
     virtual void setArticles(Article**, int) = 0;
+    virtual Article** getArticles() = 0;
     virtual int getcountArticles() const = 0;
     virtual void sort(parametrSort)  = 0;
     virtual void append(const Article&) = 0;
@@ -36,6 +37,7 @@ public:
     virtual void getPredict(std::string) const  = 0;
     //Виртуальные методы для всех классов
     virtual void show() const;
-    virtual void pop(std::string&&) = 0;
+    virtual void pop(std::string) = 0;
+    virtual PrintedEdition* copy() const = 0;
     virtual ~PrintedEdition();
 };

@@ -59,7 +59,7 @@ void Newspapper::appendNews(const string news)
     temp = nullptr;
 }
 
-void Newspapper::pop(string&& news)
+void Newspapper::pop(string news)
 {
     int index = -1;
     for (int i = 0; i < this->counternews; i++)
@@ -91,6 +91,12 @@ void Newspapper::show() const
     {
         cout << this->newscolumn[i] << endl;
     }
+}
+
+PrintedEdition* Newspapper::copy() const
+{
+    PrintedEdition* NP = new Newspapper(this->name, *this->countPages, *this->price, this->newscolumn, this->counternews);
+    return NP;
 }
 
 Newspapper::~Newspapper()

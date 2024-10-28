@@ -76,6 +76,18 @@ void Horoscope::getPredict(string zc) const
         return;
     }
 }
+
+void Horoscope::show() const
+{
+    cout << "Информация о гороскопе" << endl;
+    this->PrintedEdition::show();
+}
+
+PrintedEdition* Horoscope::copy() const
+{
+    PrintedEdition* H = new Horoscope(this->name, *this->countPages, *this->price, this->predictMassive);
+    return H;
+}
 Horoscope::~Horoscope()
 {
     for (int i = 0; i < 12; i++)

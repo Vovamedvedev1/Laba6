@@ -1,6 +1,6 @@
 #pragma once
 
-enum class parametrSort { DATA, COUNTSIMBOLS };
+enum parametrSort { DATA, COUNTSIMBOLS };
 
 class ValidatorString
 {

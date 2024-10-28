@@ -140,7 +140,7 @@ void ScientificJournal::sort(parametrSort par)
     delete[]dataMassive;
 }
 
-void ScientificJournal::pop(string&& title)
+void ScientificJournal::pop(string title)
 {
     bool flag = false;
     int index = 0;
@@ -260,4 +260,10 @@ void ScientificJournal::show() const
                 cout << *this->articles[j] << endl;
         }
     }
+}
+
+PrintedEdition* ScientificJournal::copy() const
+{
+    ScientificJournal* SJ = new ScientificJournal(this->name, *this->countParagraphs, this->paragraphs, *this->countPages, *this->price, *this->countArticles, this->articles);
+    return SJ;
 }

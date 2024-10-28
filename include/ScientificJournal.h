@@ -14,7 +14,6 @@ private:
     void validatorParagraphs(int, const std::string*) const;
     void validatorCountArticles(int) const;
     void validatorArticle(Article**, const Article&, int) const;
-    Article** getArticles();
     void setParagraphs(const std::string*, int);
     //ѕереопредел€емые дочерние методы других классов
     virtual void setNewscolumn(const std::string*, int) override { throw Exception("Error Interface"); };
@@ -25,11 +24,13 @@ public:
     ScientificJournal();
     ScientificJournal(const char*, int, std::string*, int, double, int, Article**);
     virtual void setArticles(Article**, int) override;
+    virtual Article** getArticles() override;
     virtual int getcountArticles() const override;
     virtual void sort(parametrSort) override;
-    virtual void pop(std::string&&) override;
+    virtual void pop(std::string) override;
     virtual void append(const Article&) override;
     virtual void show() const override;
+    virtual PrintedEdition* copy() const override;
     virtual ~ScientificJournal();
 };
 

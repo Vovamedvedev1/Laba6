@@ -23,4 +23,6 @@ add_executable (Laba6
     "src/Newspapper.cpp"
     "include/ScientificJournal.h"
     "src/ScientificJournal.cpp"
-)
+    "include/PublisherHouse.h"
+    "src/PublisherHouse.cpp"
+ )
