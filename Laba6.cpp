@@ -29,62 +29,111 @@ int main()
     getline(cin, name);
     cout << "Введите адрес Издательства: " << endl;
     getline(cin, address);
+    string yourzadiak;
     switch (n)
     {
     case 1:
-        funcNewspapper(ourprintedEdition);
+        try
+        {
+            funcNewspapper(ourprintedEdition);
+        }
+        catch (Exception& ex)
+        {
+            cout << ex.what() << endl;
+            return 0;
+        }
         Fabric::setType(NewspapperPubl);
-        ourPublisherHouse = Fabric::make_obj(ourprintedEdition, name, address);
-        delete[]ourprintedEdition;
-        tempStr = ourPublisherHouse->getName() + "123";
-        ourPublisherHouse->setName(tempStr.data());
-        ourPublisherHouse->setCountPages(ourPublisherHouse->getCountPages() + 10);
-        ourPublisherHouse->setPrice(ourPublisherHouse->getPrice() + 10);
-        ourPublisherHouse->appendNews("Скандал Филиппа Киркорова и Николая Баскова");
-        ourPublisherHouse->appendNews("Рост цен на продукты питания");
-        ourPublisherHouse->appendNews("Израильско-палестинский конфликт");
-        ourPublisherHouse->pop("Рост цен на продукты питания");
         break;
     case 2:
-        funcScientificJournal(ourprintedEdition);
+        try
+        {
+            funcScientificJournal(ourprintedEdition);
+        }
+        catch (Exception& ex)
+        {
+            cout << ex.what() << endl;
+            return 0;
+        }
         Fabric::setType(JournalPubl);
-        ourPublisherHouse = Fabric::make_obj(ourprintedEdition, name, address);
-        delete[]ourprintedEdition;
-        tempStr = ourPublisherHouse->getName() + "456";
-        ourPublisherHouse->setName(tempStr.data());
-        ourPublisherHouse->setCountPages(ourPublisherHouse->getCountPages() + 20);
-        ourPublisherHouse->setPrice(ourPublisherHouse->getPrice() + 20);
-        ourPublisherHouse->append(Article("Виктор Тимофеев", "Природа Кении", "География", 1700, Data(11, 8, 13)));
-        ourPublisherHouse->append(Article("Федор Тимохин", "История Золотой Орды", "История", 4000, Data(11, 8, 17)));
-        ourPublisherHouse->pop("Популяция Сибирской рыси на террритории Кузбасса");
-        ourPublisherHouse->sort(DATA);
-        cout << " Список статей отсортированный по дате " << endl;
-        for (int i = 0; i < ourPublisherHouse->getcountArticles(); i++)
-            cout << *ourPublisherHouse->getArticles()[i] << endl;
-        ourPublisherHouse->sort(COUNTSIMBOLS);
-        cout << " Список статей отсортированный по количеству символов " << endl;
-        for (int i = 0; i < ourPublisherHouse->getcountArticles(); i++)
-            cout << *ourPublisherHouse->getArticles()[i] << endl;
         break;
     case 3:
-        funcHoroscope(ourprintedEdition);
+        try
+        {
+            funcHoroscope(ourprintedEdition);
+        }
+        catch (Exception& ex)
+        {
+            cout << ex.what() << endl;
+            return 0;
+        }
         Fabric::setType(HoroscopePubl);
-        ourPublisherHouse = Fabric::make_obj(ourprintedEdition, name, address);
-        delete[]ourprintedEdition;
-        tempStr = ourPublisherHouse->getName() + "789";
-        ourPublisherHouse->setName(tempStr.data());
-        ourPublisherHouse->setCountPages(ourPublisherHouse->getCountPages() + 30);
-        ourPublisherHouse->setPrice(ourPublisherHouse->getPrice() + 30);
-        string yourzadiak;
-        cout << "Введите свой знак задиака: ";
-        cin >> yourzadiak;
-        ourPublisherHouse->getPredict(yourzadiak);
         break;
     }
-    if (ourPublisherHouse != nullptr)
+    try
     {
-        ourPublisherHouse->show();
-        delete[]ourPublisherHouse;
+        ourPublisherHouse = Fabric::make_obj(ourprintedEdition, name, address);
     }
+    catch (const char* str)
+    {
+        cout << str << endl;
+        while (name == "" || size(name) >= 30)
+        {
+            cout << "Введите название Издательства: " << endl;
+            getline(cin, name);
+        }
+        while (address == "" || size(address) >= 30)
+        {
+            cout << "Введите адрес Издательства: " << endl;
+            getline(cin, address);
+        }
+        ourPublisherHouse = Fabric::make_obj(ourprintedEdition, name, address);
+    }
+    delete[]ourprintedEdition;
+    try
+    {
+        tempStr = ourPublisherHouse->getName() + "123";
+        ourPublisherHouse->setName(tempStr.data());
+    }
+    catch (PublisherHouseException& ex)
+    {
+        cout << ex.what() << endl;
+    }
+    try
+    {
+        ourPublisherHouse->setCountPages(ourPublisherHouse->getCountPages() + 2000);
+    }
+    catch (PublisherHouseException& ex)
+    {
+        cout << ex.what() << endl;
+    }
+    try
+    {
+        ourPublisherHouse->setPrice(ourPublisherHouse->getPrice() + 3000000);
+    }
+    catch (PublisherHouseException& ex)
+    {
+        cout << ex.what() << endl;
+    }
+    if (Fabric::getType() == HoroscopePubl)
+    {
+        try
+        {
+            cout << "Введите свой знак задиака: ";
+            cin >> yourzadiak;
+            ourPublisherHouse->getPredict(yourzadiak);
+        }
+        catch (int ex)
+        {
+            cout << ex << endl;
+            while (yourzadiak == "" || size(yourzadiak) > 10)
+            {
+                cout << "Введите свой знак задиака: ";
+                cin >> yourzadiak;
+            }
+            ourPublisherHouse->getPredict(yourzadiak);
+        }
+    }
+    ourPublisherHouse->show();
+    delete[]ourPublisherHouse;
     return 0;
 }

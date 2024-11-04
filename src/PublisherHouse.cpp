@@ -4,10 +4,25 @@
 #include "PublisherHouse.h"
 using namespace std;
 
+PublisherHouseException::PublisherHouseException(const char* msg) noexcept
+{
+	this->msg = msg;
+}
+const char* PublisherHouseException::what() const noexcept
+{
+	return this->msg.c_str();
+}
+
+
 //!!!!!!!!!!!!!!!!!!!!!Fabric!!!!!!!!!!!!!!!!!!!
 void Fabric::setType(typePublisherHouse t)
 {
 	type = t;
+}
+
+typePublisherHouse Fabric::getType()
+{
+	return type;
 }
 
 PublisherHouse* Fabric::make_obj(PrintedEdition* printedEdition, string emblem, string address)
@@ -28,9 +43,19 @@ PublisherHouse* Fabric::make_obj(PrintedEdition* printedEdition, string emblem, 
 	return PE;
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!!PublisherHouse!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!! PublisherHouse !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+void PublisherHouse::validateEmblemAddres(string emblem, string addres)
+{
+	if (emblem == "" || size(emblem) >= 30)
+		throw "Error len of emblem!!!";
+	if (addres == "" || size(addres) >= 30)
+		throw "Error len of addres!!!";
+}
+
 PublisherHouse::PublisherHouse(string emblem, string addres, PrintedEdition* printedEdition)
 {
+	this->validateEmblemAddres(emblem, addres);
 	this->emblem = emblem;
 	this->addres = addres;
 	this->printedEdition = printedEdition->copy();
@@ -45,14 +70,26 @@ string PublisherHouse::getAddress() const
 }
 void PublisherHouse::setName(const char* name)
 {
+	if (name == "" || strlen(name) >= 20)
+	{
+		throw PublisherHouseException("Error name");
+	}
 	this->printedEdition->setName(name);
 }
 void PublisherHouse::setCountPages(int countPages)
 {
+	if (countPages <= 0 || countPages >= 1000)
+	{
+		throw PublisherHouseException("Error countPages");
+	}
 	this->printedEdition->setCountPages(countPages);
 }
 void PublisherHouse::setPrice(double price)
 {
+	if (price <= 0 || price >= 5000)
+	{
+		throw PublisherHouseException("Error price");
+	}
 	this->printedEdition->setPrice(price);
 }
 std::string PublisherHouse::getName() const
@@ -173,6 +210,8 @@ void HoroscopePublisherHouse::setPredictMassive(Prediction** pred)
 }
 void HoroscopePublisherHouse::getPredict(std::string zc) const
 {
+	if (zc == "" || size(zc) > 10)
+		throw -1;
 	Horoscope* HC = dynamic_cast<Horoscope*>(this->printedEdition);
 	HC->getPredict(zc);
 }

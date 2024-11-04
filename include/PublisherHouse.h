@@ -7,6 +7,15 @@ using namespace std;
 
 enum typePublisherHouse{JournalPubl, NewspapperPubl, HoroscopePubl};
 
+class PublisherHouseException : public std::exception
+{
+protected:
+	std::string msg;
+public:
+	PublisherHouseException(const char* msg) noexcept;
+	const char* what() const noexcept override;
+};
+
 class PublisherHouse
 {
 protected:
@@ -14,6 +23,7 @@ protected:
 	string addres;
 	PrintedEdition* printedEdition;
 	PublisherHouse(string emblem, string adddres, PrintedEdition* printedEdition);
+	void validateEmblemAddres(string emblem, string addres);
 public:
 	string getEmblem() const;
 	string getAddress() const;
@@ -85,5 +95,6 @@ private:
 	static typePublisherHouse type;
 public:
 	static void setType(typePublisherHouse t);
+	static typePublisherHouse getType();
 	static PublisherHouse* make_obj(PrintedEdition* printedEdition, string emblem, string address);
 };
